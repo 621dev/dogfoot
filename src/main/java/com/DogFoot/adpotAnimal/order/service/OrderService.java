@@ -1,15 +1,20 @@
 package com.DogFoot.adpotAnimal.order.service;
 
+import com.DogFoot.adpotAnimal.order.dto.OrderRequest;
 import com.DogFoot.adpotAnimal.order.entity.Delivery;
 import com.DogFoot.adpotAnimal.order.entity.Order;
 import com.DogFoot.adpotAnimal.order.entity.OrderItem;
+import com.DogFoot.adpotAnimal.order.repository.DeliveryRepository;
 import com.DogFoot.adpotAnimal.order.repository.OrderRepository;
+import com.DogFoot.adpotAnimal.users.entity.CustomUserDetails;
 import com.DogFoot.adpotAnimal.users.entity.Users;
 import com.DogFoot.adpotAnimal.users.repository.UsersRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,12 +23,26 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final UsersRepository usersRepository;
+    private DeliveryService deliveryService;
+    private OrderItemService orderItemService;
+
 
     // 주문 생성
-    public Order create(Users users, Delivery delivery, List<OrderItem> orderItems) {
-        Order createOrder = Order.createOrder(users, delivery, orderItems);
+    public Long createOrder(OrderRequest request) {
+        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Users users = userDetails.getUser();
 
-        return orderRepository.save(createOrder);
+        Delivery delivery = deliveryService.findById(request.getDeliveryId());
+
+        List<OrderItem> orderItems = new ArrayList<>();
+        for (Long orderItemId : request.getOrderItemId()) {
+            orderItems.add(orderItemService.findById(orderItemId));
+        }
+
+        Order order = Order.createOrder(users, delivery, orderItems);
+        Order createdOrder = orderRepository.save(order);
+
+        return createdOrder.getId();
     }
 
     // 각 회원 주문 조회

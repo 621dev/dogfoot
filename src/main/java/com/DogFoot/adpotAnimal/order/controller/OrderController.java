@@ -35,21 +35,8 @@ public class OrderController {
     // 주문 생성
     @PostMapping("")
     public ResponseEntity<Long> addOrder(@RequestBody OrderRequest request) {
-
-        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Users users = userDetails.getUser();
-
-        Delivery delivery = deliveryService.findById(request.getDeliveryId());
-
-        List<OrderItem> orderItems = new ArrayList<>();
-
-        for (Long orderItemId : request.getOrderItemId()) {
-            orderItems.add(orderItemService.findById(orderItemId));
-        }
-
-        Order order = orderService.create(users, delivery, orderItems);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(order.getId());
+        Long orderId = orderService.createOrder(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(orderId);
     }
 
     // 주문 목록 검색
