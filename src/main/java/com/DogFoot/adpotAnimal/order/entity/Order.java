@@ -7,7 +7,10 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.lang.reflect.Member;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +41,7 @@ public class Order extends BaseEntity {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
-//     양방향 매핑 (연관관계 메소드)
+    // 연관관계 메소드
     public void setUsers(Users users) {
         this.users = users;
         users.getOrders().add(this);
