@@ -1,5 +1,6 @@
 package com.DogFoot.adpotAnimal.order.entity;
 
+import com.DogFoot.adpotAnimal.common.BaseEntity;
 import com.DogFoot.adpotAnimal.users.entity.Users;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -14,10 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter @Setter
+@Getter
 @Table(name = "orders")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Order {
+public class Order extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,8 +28,6 @@ public class Order {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
-
-    private LocalDateTime orderDate;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
@@ -43,7 +42,7 @@ public class Order {
     private List<OrderItem> orderItems = new ArrayList<>();
 
 //     양방향 매핑 (연관관계 메소드)
-    public void setMember(Users users) {
+    public void setUsers(Users users) {
         this.users = users;
         users.getOrders().add(this);
     }
@@ -58,11 +57,7 @@ public class Order {
         delivery.setOrder(this);
     }
 
-    public void setOrderDate(LocalDateTime orderDate) {
-        this.orderDate = orderDate;
-    }
-
-    public void setStatus(OrderStatus orderStatus) {
+    public void setOrderStatus(OrderStatus orderStatus) {
         this.orderStatus = orderStatus;
     }
 
@@ -78,7 +73,6 @@ public class Order {
         }
 
         order.setOrderStatus(OrderStatus.ORDER);
-        order.setOrderDate(LocalDateTime.now());
 
         return order;
     }
