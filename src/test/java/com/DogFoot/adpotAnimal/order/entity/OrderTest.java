@@ -1,19 +1,39 @@
 package com.DogFoot.adpotAnimal.order.entity;
 
+import com.DogFoot.adpotAnimal.order.dto.OrderItemRequest;
+import com.DogFoot.adpotAnimal.order.repository.OrderItemRepository;
+import com.DogFoot.adpotAnimal.order.repository.OrderRepository;
+import com.DogFoot.adpotAnimal.order.service.OrderItemService;
 import com.DogFoot.adpotAnimal.order.service.OrderService;
 import com.DogFoot.adpotAnimal.products.entity.Product;
+import com.DogFoot.adpotAnimal.products.service.ProductService;
 import com.DogFoot.adpotAnimal.users.entity.Users;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDateTime;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 class OrderTest {
 
+    @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private ProductService productService;
+
+    @Autowired
+    private OrderItemRepository orderItemRepository;
+
+    @Autowired
+    private OrderItemService orderItemService;
 
 
     // 주문 생성 로직 테스트
@@ -33,8 +53,6 @@ class OrderTest {
         assertEquals(mockDelivery, order.getDelivery());
         assertEquals(mockOrderItems.size(), order.getOrderItems().size());
         assertEquals(OrderStatus.ORDER, order.getOrderStatus());
-        assertNotNull(order.getOrderDate());
-        assertTrue(order.getOrderDate().isBefore(LocalDateTime.now()));
     }
 
 

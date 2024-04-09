@@ -36,14 +36,7 @@ public class OrderItemController {
 
     @PostMapping("/orderItems")
     public ResponseEntity<List<Long>> createOrderItems(@RequestBody List<OrderItemRequest> requests) {
-        List<Long> orderItemIds = new ArrayList<>();
-
-        for (OrderItemRequest request : requests) {
-            Product product = productService.findProductById(request.getProductId());
-            OrderItem createdOrderItem = orderItemService.create(product, product.getProduct_price(), request.getCount());
-            orderItemIds.add(createdOrderItem.getId());
-        }
-
+        List<Long> orderItemIds = orderItemService.createOrderItems(requests);
         return ResponseEntity.status(HttpStatus.CREATED).body(orderItemIds);
     }
 

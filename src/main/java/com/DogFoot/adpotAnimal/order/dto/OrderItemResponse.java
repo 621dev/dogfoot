@@ -11,11 +11,6 @@ import lombok.Getter;
 public class OrderItemResponse {
 
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false)
-    private Long id;
-
     private final int count;
     private final int orderPrice;
     private final int totalPrice;
