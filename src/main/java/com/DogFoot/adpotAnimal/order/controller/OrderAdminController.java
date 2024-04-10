@@ -8,11 +8,15 @@ import com.DogFoot.adpotAnimal.order.service.OrderItemService;
 import com.DogFoot.adpotAnimal.order.service.OrderService;
 import com.DogFoot.adpotAnimal.users.service.UsersService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 @Controller
@@ -27,9 +31,14 @@ public class OrderAdminController {
 
 
     // 회원 주문 정보 목록 조회
+    // 페이지네이션 추가
     @GetMapping("")
     public ResponseEntity<List<OrderResponse>> findOrders(@RequestParam Long usersId) {
-        List<OrderResponse> orderResponses = orderService.findAllByUsersId(usersId)
+
+        PageRequest pageable = PageRequest.of(0, 10);
+        Page<Order> ordersPage = orderService.findAllByUsersId(usersId, pageable);
+
+        List<OrderResponse> orderResponses = ordersPage.getContent()
             .stream()
             .map(OrderResponse::new)
             .toList();
@@ -37,7 +46,7 @@ public class OrderAdminController {
         return ResponseEntity.ok().body(orderResponses);
     }
 
-    // 회원의 주문 정보 조회
+    // 회원의 주문 정보 상세 조회
     @GetMapping("/{id}")
     public ResponseEntity<OrderResponse> findOrder(@PathVariable(value = "id") Long id) {
         Order order = orderService.findById(id);

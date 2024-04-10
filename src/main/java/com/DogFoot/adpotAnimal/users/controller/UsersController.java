@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RequestMapping("/users")
 @RequiredArgsConstructor
-public class UsersController {
+public class  UsersController {
 
     private final UsersService usersService;
 

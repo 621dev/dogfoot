@@ -15,6 +15,9 @@ import com.DogFoot.adpotAnimal.users.service.UsersService;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -42,7 +45,11 @@ public class OrderController {
     // 주문 목록 검색
     @GetMapping("")
     public ResponseEntity<List<OrderResponse>> findOrders(@RequestParam Long usersId) {
-        List<OrderResponse> orderResponses = orderService.findAllByUsersId(usersId)
+
+        PageRequest pageable = PageRequest.of(0, 10, Sort.by(String.valueOf(usersId)).ascending());
+        Page<Order> ordersPage = orderService.findAllByUsersId(usersId, pageable);
+
+        List<OrderResponse> orderResponses = ordersPage.getContent()
             .stream()
             .map(OrderResponse::new)
             .toList();

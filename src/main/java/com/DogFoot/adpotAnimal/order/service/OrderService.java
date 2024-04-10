@@ -4,16 +4,18 @@ import com.DogFoot.adpotAnimal.order.dto.OrderRequest;
 import com.DogFoot.adpotAnimal.order.entity.Delivery;
 import com.DogFoot.adpotAnimal.order.entity.Order;
 import com.DogFoot.adpotAnimal.order.entity.OrderItem;
-import com.DogFoot.adpotAnimal.order.repository.DeliveryRepository;
 import com.DogFoot.adpotAnimal.order.repository.OrderRepository;
 import com.DogFoot.adpotAnimal.users.entity.CustomUserDetails;
 import com.DogFoot.adpotAnimal.users.entity.Users;
 import com.DogFoot.adpotAnimal.users.repository.UsersRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,8 +54,9 @@ public class OrderService {
     }
 
     // 모든 회윈의 주문 조회
-    public List<Order> findAllByUsersId(Long usersId) {
-        return orderRepository.findAllByUsers_id(usersId);
+    // 페이지네이션 작성
+    public Page<Order> findAllByUsersId(Long usersId, PageRequest pageable) {
+        return orderRepository.findAllByUsersId(usersId, pageable);
     }
 
     // 주문 상태 삭제
