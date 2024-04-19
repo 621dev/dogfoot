@@ -133,7 +133,7 @@ const productPrice = queryParams['productPrice'];
 const productStock = queryParams['productStock'];
 async function createOrderItem(productId, productName, productPrice, productStock) {
     try {
-        const response = await axios.post('/orderItem/api', {
+        const response = await axios.post('/orderItem', {
             productId: productId,
             productName: productName,
             productPrice: productPrice,
@@ -160,13 +160,13 @@ async function createOrderItem(productId, productName, productPrice, productStoc
             const productName = queryParams['productName'];
             const productPrice = queryParams['productPrice'];
             const productStock = queryParams['productStock'];
-            const cartItemId = await createOrderItem(productId, productName, productPrice, productStock).get('orderItemId');
+            const cartItemId = await createOrderItem(productId, productName, productPrice, productStock);
 
             // 주문 요청 객체 생성
             const orderRequest = {
                 usersId: userId,
                 deliveryId: deliveryId,
-                orderItemIds: cartItemId
+                orderItemIds: [cartItemId]
             };
 
             // 주문 생성
@@ -185,11 +185,8 @@ async function createOrderItem(productId, productName, productPrice, productStoc
 function getPreviousPageInfo() {
     // 현재 URL에서 이전 페이지의 정보를 추출합니다.
     const previousPageInfo = window.location.search;
-    // 추출된 정보를 사용하여 주문하기 기능을 실행합니다.
-    // 예를 들어, 제품 ID, 제품 이름, 가격 등...
-    // 이 함수는 페이지가 로드될 때 자동으로 실행되도록 설정할 수 있습니다.
-}
 
+}
 // 주문하기 페이지 로드 시 이전 페이지의 정보를 추출하여 사용합니다.
 getPreviousPageInfo();
 

@@ -112,7 +112,7 @@
       <p class="lead mb-4">주문이 실패하였습니다.</p>
 
       <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-        <button type="button" class="btn btn-warning btn-lg px-4 gap-3 text-white">다시 주문하기</button>
+        <button type="button" class="btn btn-warning btn-lg px-4 gap-3 text-white" onclick="redirectToProductToOrderPageWithError()">다시 주문하기</button>
         <button type="button" class="btn btn-outline-warning btn-lg px-4">마이페이지</button>
       </div>
     </div>
@@ -120,7 +120,18 @@
 
 
 </main>
-<script src="/js/bootstrap.bundle.min.js"></script>
+
+
 
     </body>
+
+  <script src="/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="/js/login.js"></script>
+  <script type="module" src="/js/logout.js"></script>
+  <script type="module" src="/js/orderFail.js"></script>
+  <script type="module" src="/js/productToOrder.js"></script>
+
+
+
+
 </html>

@@ -98,3 +98,8 @@ async function displayProductDetail(productId) {
 
 // 초기화 코드
 displayProductDetail();
+
+console.log("productId:", productId);
+console.log("productName:", productName);
+console.log("productPrice:", productPrice);
+console.log("productStock:", productStock);
