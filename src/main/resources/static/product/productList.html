@@ -43,6 +43,8 @@
   </nav>
 </div>
 
+
+
 <!-- Section-->
 <section class="py-5">
   <div class="container-xxl">
@@ -69,7 +71,7 @@
         </div>
       </div>
       <div class="col mb-7 p-2">
-        <div class="card h-100">
+        <div class="card h-100 product_card">
           <!-- Product image-->
           <img class="card-img-top h-60" src="https://dummyimage.com/600x450/dee2e6/6c757d.jpg"
                alt="..."/>
@@ -153,22 +155,6 @@
     </nav>
   </div>
 </section>
-
-
-<!-- Core theme JS-->
-
-
-<script>
-  const triggerTabList = document.querySelectorAll('.nav-link')
-  triggerTabList.forEach(triggerEl => {
-    const tabTrigger = new bootstrap.Tab(triggerEl)
-
-    triggerEl.addEventListener('click', event => {
-      event.preventDefault()
-      tabTrigger.show()
-    })
-  })
-</script>
 
 </body>
 

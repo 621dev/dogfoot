@@ -3,6 +3,7 @@ package com.DogFoot.adpotAnimal.products.controller;
 import com.DogFoot.adpotAnimal.products.dto.ProductDto;
 import com.DogFoot.adpotAnimal.products.entity.Product;
 import com.DogFoot.adpotAnimal.products.service.ProductService;
+import com.DogFoot.adpotAnimal.users.entity.Users;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
